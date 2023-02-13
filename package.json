@@ -8,15 +8,15 @@
     },
     "repository": {
       "type": "git",
-      "url": ""
+      "url": "git+https://github.com/begin0071/employee-tracker.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "bugs": {
-      "url": ""
+      "url": "https://github.com/begin0071/employee-tracker/issues"
     },
-    "homepage": "",
+    "homepage": "https://github.com/begin0071/employee-tracker",
     "dependencies": {
       "console.table": "^0.10.0",
       "inquirer": "^8.2.4",
