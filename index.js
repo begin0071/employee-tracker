@@ -62,7 +62,7 @@ function startQuestions() {
               }
             ])
             .then(function (responses) {
-              conn.query("INSERT INTO department (names) VALUES('" + responses.deptName + "')");
+              con.query("INSERT INTO department (names) VALUES('" + responses.deptName + "')");
               startQuestions();
             });
 
@@ -93,51 +93,68 @@ function startQuestions() {
             });
           break;
 
-        case "Add an Employee":
-          inquirer
-            .prompt([
-              {
-                type: 'input',
-                message: 'What is the first name',
-                name: 'firstName'
-              },
-              {
-                type: 'input',
-                message: 'What is the last name',
-                name: 'lastName'
-              },
-              {
-                type: 'input',
-                message: 'What is the role id',
-                name: 'roleId'
-              },
+        
+          case "Add an Employee":
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: 'What is the first name',
+        name: 'firstName'
+      },
+      {
+        type: 'input',
+        message: 'What is the last name',
+        name: 'lastName'
+      },
+      {
+        type: 'input',
+        message: 'What is the role id',
+        name: 'roleId'
+      },
+      {
+        type: 'input',
+        message: "What is your manager's id",
+        name: 'managerId'
+      },
 
-            ])
-            .then(function (answers) {
-              var sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES('" + answers.first_name + "', '" + answers.last_name + "', " + answers.role_id + ", " + answers.manager_id + ")";
-              con.query(sql);
-              askQuestions();
-            });
-          break;
-        case "Update an Employee Role":
-          inquirer
-            .prompt([
-              {
-                input: 'input',
-                message: 'Which employee would you like to update (enter id)?',
-                name: 'updateEmployee'
-              },
-              {
-                input: 'input',
-                message: 'What will be their new role (enter role id)?',
-                name: 'updateId'
-              },
-            ])
-            .then(function (answers) {
-              con.query("UPDATE employee SET role_id = " + answers.updateId + " WHERE id = " + answers.updateEmployee);
-              askQuestions();
-            })
-          break;
-      }
+    ])
+    .then(function (answers) {
+      var sql = "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES('" + answers.firstName + "', '" + answers.lastName + "', " + answers.roleId + ", " + answers.managerId + ")";
+      con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Employee added successfully");
+        startQuestions();
+      });
     });
-};
+  break;
+case "Update an Employee Role":
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: 'Which employee would you like to update (enter id)?',
+        name: 'updateEmployee'
+      },
+      {
+        type: 'input',
+        message: 'What will be their new role (enter role id)?',
+        name: 'updateId'
+      },
+    ])
+    
+    .then(function (answers) {
+      con.query("UPDATE employee SET role_id = " + answers.updateId + " WHERE id = " + answers.updateEmployee, function (error, results, fields) {
+      if (error) {
+      console.error(error);
+      }
+      startQuestions();
+      });
+      });
+      break;
+      }
+      });
+      };
+      
+      
+      
