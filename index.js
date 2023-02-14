@@ -1,5 +1,11 @@
+// Import Inquirer and MYSQL Modules
 const inquirer = require('inquirer');
 var mysql = require('mysql');
+
+
+
+
+// Create the connection information for the sql database
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -9,13 +15,27 @@ var con = mysql.createConnection({
   database: "employees_db"
 });
 
+
+
+
+// Connect to the mysql server and sql database AND LOG a message when connected
 con.connect(function (error) {
   if (error) throw error;
   console.log("You are now connected to the employees_db database.");
 });
-startQuestions();
-function startQuestions() {
 
+
+
+
+// Call the start function after the connection is made to prompt the user
+startQuestions();
+
+
+
+
+//define the startQuestions function that prompts the user for what they would like to do
+function startQuestions() {
+           //Prompts the user for what they would like to do
   inquirer
     .prompt([
       {
@@ -26,9 +46,11 @@ function startQuestions() {
       },
     ])
 
+
+             // Based on their answer, execute either the corresponding SQL query and display the result or end the program
     .then(function (responses) {
       switch (responses.action) {
-        case "View all Departments":
+        case "View Departments":
           con.query("SELECT * FROM department", function (error, result, fields) {
             if (error) throw error;
             console.table(result);
@@ -52,7 +74,8 @@ function startQuestions() {
           });
           break;
 
-        case "Add a Department":
+        case "Add  Department":
+          //Prompts the user for the name of the department they would like to add
           inquirer
             .prompt([
               {
@@ -69,6 +92,7 @@ function startQuestions() {
           break;
 
         case "Add a Role":
+          //Prompts the user for the name of the role they would like to add
           inquirer
             .prompt([
               {
@@ -95,6 +119,7 @@ function startQuestions() {
 
         
           case "Add an Employee":
+            // Prompt the user to enter a new employee's first name, last name, role id, and manager id, then insert it into the database
   inquirer
     .prompt([
       {
